@@ -3,6 +3,8 @@ package br.fiap.modelo;
 import br.fiap.conexao.Conexao;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DespesaDAO {
     private PreparedStatement ps;
@@ -21,7 +23,30 @@ public class DespesaDAO {
             ps.execute();
         }
         catch(SQLException e) {
-            System.out.println("Erro ao inserir no banco\n" + e);
+            System.out.println("Erro ao inserir despesa.\n" + e);
         }
     }
+
+    public List<Despesa> listar(){
+        List<Despesa> lista = new ArrayList<>();
+        sql = "select * from java_despesa";
+
+        try(Connection connection = Conexao.conectar()) {
+            ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                Despesa despesa = new Despesa();
+                despesa.setId(rs.getLong("id_despesa"));
+                despesa.setCategoria(new Categoria(rs.getLong("id_categoria"), ""));
+                despesa.setDescricao(rs.getString("descricao"));
+                despesa.setData(rs.getDate("data").toLocalDate());
+            }
+        } catch (SQLException e) {
+            System.out.println("erro ao listar despesas.\n" + e);
+        } finally {
+
+        }
+        return lista;
+    }
+
 }
