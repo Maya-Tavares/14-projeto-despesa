@@ -12,7 +12,8 @@ public class testeDespesa {
 
         DateTimeFormatter mascara = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    despesa.setId(100L);
+//    despesa.setId(100L);
+//    create sequence sqcat start with 10 increment by 1;
     despesa.setDescricao("viagem pro chile");
     despesa.setData(LocalDate.parse("01/10/2003"));
     despesa.setValor(5630.00);
